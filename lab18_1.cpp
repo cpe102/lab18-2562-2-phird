@@ -40,7 +40,9 @@ double overlap(Rect a, Rect b){
 	// ขอบเขตล่างของ y = max(y1,y2)
 	// ขอบเขตบนของ y = min(y1+h1, y2+h2)
 	  
-//บน
+if (b.x < a.x+a.w)
+{
+	//บน
 //จุด แรก
 if (a.x<b.x){ lap.x = b.x ; } else { lap.x = a.x ;}
 //จุด สอง 
@@ -55,4 +57,12 @@ if ((a.y-a.h)<(b.y-b.h)) { hNew = b.y-b.h ;} else { hNew = a.y-a.h ;}
 yNew=hNew-lap.y;
 
 return abs(xNew*yNew);
+} else
+{
+	return 0;
+}
+
+
+
+
 }

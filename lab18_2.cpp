@@ -40,7 +40,8 @@ double overlap(Rect *R1, Rect *R2){
 	//============ h overlap ================
 	// ขอบเขตล่างของ y = max(y1,y2)
 	// ขอบเขตบนของ y = min(y1+h1, y2+h2)
-	  
+
+if (R2->x < R1->x+R1->w){      
 //บน
 //จุด แรก
 if (R1->x < R2->x){ lap.x = R2->x ; } else { lap.x = R1->x ;}
@@ -55,5 +56,10 @@ if (R1->y < R2->y){ lap.y = R1->y ; } else { lap.y = R2->y ;}
 if ((R1->y - R1->h)<(R2->y - R2->h)) { hNew = R2->y - R2->h ;} else { hNew = R1->y - R1->h ;}
 yNew=hNew-lap.y;
 
-return abs(xNew*yNew);
+return abs(xNew*yNew);}
+else
+{
+    return 0;
+}
+
 }
