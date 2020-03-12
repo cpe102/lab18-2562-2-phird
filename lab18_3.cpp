@@ -9,6 +9,11 @@ using namespace std;
 
 struct student{
 	//Define struct student with four member (name ,id , gender, gpa);
+	string name;
+	int id;
+	string gender;
+	double gpa;
+	//int ngender;
 };
 
 struct course{
@@ -18,7 +23,8 @@ struct course{
 	vector<student *> student_list;
 };
 
-student * findstudent(vector<student> allstudents,int key){ //Correct this line
+student *findstudent(vector<student> &allstudents,int key){ // add & to allstudent
+//student *findstudent(vector<student> allstudents,int key){ //Correct this line
 	for(unsigned int i = 0; i < allstudents.size(); i++){
 		if(allstudents[i].id  == key) return &allstudents[i];
 	}
@@ -36,7 +42,7 @@ void printreport(vector<course> allcourses){
 		cout << "\n\nStudents:\t";
 		for(unsigned int j = 0; j < allcourses[i].student_list.size();j++){
 			if(j != 0) cout << "\t\t";
-			cout << setw(15) << left << allcourses[i].student_list[j]->name << "\t";
+			cout << setw(20) << left << allcourses[i].student_list[j]->name << "\t";
 			cout << allcourses[i].student_list[j]->id << "\t";
 			cout << allcourses[i].student_list[j]->gender << "\t";
 			cout << allcourses[i].student_list[j]->gpa << "\n";
@@ -49,19 +55,26 @@ void printreport(vector<course> allcourses){
 int main(){
 	ifstream student_file("students.txt");
 	ifstream course_file("courses.txt");
-	vector<student> allstudents;
-	vector<course> allcourses;
+	vector<student> allstudents; //kept student text in this vector;
+	vector<course> allcourses; //kept course text in this vector;
 	
 	string textline;
 	
-	while(getline(student_file,textline)){
-		student s; 
-	
+	while(getline(student_file,textline)){ //get student file into textline
+		student s; 		
 		//Assign value to the members of struct s;
-	
-		allstudents.push_back(s); 		
+		char name1[100];
+		int id1;
+		char gender1;
+		float gpa1;
+		sscanf(textline.c_str(),"%[^,],%d,%c,%f",&name1,&id1,&gender1,&gpa1);
+		s.name=name1;
+		s.id=id1;
+		s.gender=gender1;
+		s.gpa=gpa1;
+		allstudents.push_back(s); // s that contain the string of student file and pushback into vector allstudent 		
 	}
-	
+	// text line clear 
 	int state = 1;
 	while(getline(course_file,textline)){
 		if(state == 1){
@@ -77,6 +90,7 @@ int main(){
 				state = 3;
 			}else{
 				//Append lecture_list;
+				allcourses[allcourses.size()-1].lecture_list.push_back(textline.c_str()); // line nee kee ar lai ?
 			}			
 		}else{
 			if(textline == "---------------------------------------"){
@@ -84,6 +98,7 @@ int main(){
 			}else{
 				student *p = findstudent(allstudents,atof(textline.c_str()));
 				//Append student_list;
+				allcourses[allcourses.size()-1].student_list.push_back(p); //mai kaw jai
 			}
 		}
 	}
