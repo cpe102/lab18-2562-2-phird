@@ -39,6 +39,11 @@ double overlap(Rect a, Rect b){
 	//============ h overlap ================
 	// ขอบเขตล่างของ y = max(y1,y2)
 	// ขอบเขตบนของ y = min(y1+h1, y2+h2)
+	if (b.x<a.x)
+	{
+		return overlap(b,a);
+	}
+	
 	  
 if (b.x < a.x+a.w)
 {

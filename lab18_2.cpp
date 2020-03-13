@@ -41,6 +41,10 @@ double overlap(Rect *R1, Rect *R2){
 	// ขอบเขตล่างของ y = max(y1,y2)
 	// ขอบเขตบนของ y = min(y1+h1, y2+h2)
 
+if (R2->x < R1->x)
+	{
+		return overlap(R2,R1);
+	}
 if (R2->x < R1->x+R1->w){      
 //บน
 //จุด แรก
